@@ -16,7 +16,7 @@ public class main {
 		System.out.print(generarQuerys.validarSiEsGenero("Masculino")); //mes //dia	*/	
 		//System.out.print(generarQuerys.validarSiEsAnio("20"));
 		
-	//	ventanas.registrarAsesor();
+		//ventanas.registrarAsesor();
 		ventanas.menu();
 
 		

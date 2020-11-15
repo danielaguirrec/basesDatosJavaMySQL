@@ -217,12 +217,7 @@ public class ventanas extends generarQuerys {
 		 public void actionPerformed(ActionEvent e)
 		   {ventanas.listarAsesores();
 			 menuOpciones.dispose();
-			 //comienza aca
-			 String inputString = JOptionPane.showInputDialog(null, "INPUT A NUMER TO DISPLAY");
-		        int input = Integer.parseInt(inputString);
-		        System.out.println("User input: " + input);
-
-		        JOptionPane.showMessageDialog(null, "User entered " + input);
+			//comienza aca
 		   //hasta aca
 		   }
 	 }); 
@@ -270,11 +265,8 @@ public class ventanas extends generarQuerys {
 	 menuOpciones.setSize(400, 300);
 	 menuOpciones.setLocationRelativeTo(null);
 	 menuOpciones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 menuOpciones.setVisible(true);
-		 
-		 
-		
-		return menuOpciones;
+	 menuOpciones.setVisible(true);		
+	return menuOpciones;
 		
 	}
 	
