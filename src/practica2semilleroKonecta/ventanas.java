@@ -27,10 +27,25 @@ public class ventanas extends generarQuerys {
          constr.anchor = GridBagConstraints.WEST;
          
          constr.gridx=0;
-         constr.gridy=0;
+         constr.gridy=0; //necesito borrar esto
    
          // Declare the required Labels
          JLabel userNameLabel = new JLabel("Ingrese el nombre del asesor :");
+         JLabel userCedulaLabel = new JLabel("Ingrese la cedula del asesor :");
+         JLabel userTelefonoLabel = new JLabel("Ingrese el Telefono del asesor :");
+         JLabel userAnioLabel = new JLabel("Ingrese el Año en que nacio el asesor :");
+         JLabel userMesLabel = new JLabel("Ingrese el Mes en que nacio del asesor :");
+         JLabel userDiaLabel = new JLabel("Ingrese el Dia en que nacio del asesor :");
+         JLabel userGeneroLabel = new JLabel("Ingrese el Genero ( Masculino/Femenino) del asesor :");
+         JLabel userNameLabel = new JLabel("Ingrese el nombre del asesor :");
+         JLabel userNameLabel = new JLabel("Ingrese el nombre del asesor :");
+         
+         
+         
+         
+         
+         
+         
          JTextField userNameTxt = new JTextField(20);
          
          panel.add(userNameLabel, constr);

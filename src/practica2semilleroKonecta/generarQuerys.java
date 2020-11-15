@@ -124,12 +124,11 @@ public class generarQuerys extends JFrame {
 				}   catch (SQLException sqlEx) {		
 					sqlEx.printStackTrace();
 				}
-		}
-		
+		}	
 		
 		//metodos NO SQL
 		public static void pedirValorAsesor() {
-				
+			
 			  generarQuerys recibirValores = new generarQuerys();
 			  //Nombre
 			  Scanner scanNombre = new Scanner(System.in);  
