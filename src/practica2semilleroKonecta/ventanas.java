@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.sql.Date;
 
 public class ventanas extends generarQuerys {
 	
@@ -38,7 +39,7 @@ public class ventanas extends generarQuerys {
          JLabel userDiaLabel = new JLabel("Ingrese el Dia en que nacio del asesor :");
          JLabel userGeneroLabel = new JLabel("Ingrese el Genero ( Masculino/Femenino) del asesor :");
          JLabel userClienteLabel = new JLabel("Ingrese el Cliente del asesor :");
-         JLabel userSedeLabel = new JLabel("Ingrese sede (Ruta N, Puerto Seco, Buoro) :");               
+         JLabel userSedeLabel = new JLabel("Ingrese sede (Ruta N, Puerto Seco, Buro) :");               
          
          JTextField userNameTxt = new JTextField(20);
          JTextField userCedulaTxt = new JTextField(20);
@@ -100,7 +101,7 @@ public class ventanas extends generarQuerys {
          
 
          // Button with text "Register"
- JButton button = new JButton("Register");
+ JButton button = new JButton("Registrar");
  // add a listener to button
  button.addActionListener(new ActionListener()
  {
@@ -147,8 +148,11 @@ public class ventanas extends generarQuerys {
 		     userDiaTxt.setText("");
 		     userGeneroTxt.setText("");
 		     userClienteTxt.setText("");
-		     userSedeTxt.setText("");
-		     registrarAsesor( Nombre, Cedula, Telefono,  Anio, Genero, Cliente,Sede, edad);
+		     userSedeTxt.setText("");	     
+		     String strFecha=Anio+"-"+Mes+"-"+Dia;   //fecha de nacimeitno  
+		     Date date=Date.valueOf(strFecha);//converting string into sql date  
+		     registrarAsesor( Nombre, Cedula, Telefono,  date, Genero, Cliente,Sede, edad);
+		     
 	   }
 	   else {
 		   headingLabel.setText(ValidacionCampo); 
@@ -171,6 +175,110 @@ public class ventanas extends generarQuerys {
 		         
 		return  frameRegistro;
 	}
+	public static JFrame menu() {
+		 JFrame menuOpciones= new JFrame();
+		 menuOpciones.setTitle("Menu de Consultas");
+		 JPanel mainPanel = new JPanel();
+ 
+	     mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); 
+         JPanel headingPanel = new JPanel();
+         JLabel headingLabel = new JLabel("Menu De Consultas");
+         headingPanel.add(headingLabel);
+         
+         
+         JPanel panel = new JPanel(new GridBagLayout());
+         // Constraints for the layout
+         GridBagConstraints constr = new GridBagConstraints();
+         constr.insets = new Insets(5, 5, 5, 5);     
+         constr.anchor = GridBagConstraints.WEST;      
+         constr.gridx=0;
+         constr.gridy=1; //necesito borrar esto   
+         constr.gridwidth = 2;
+         constr.anchor = GridBagConstraints.CENTER;
+
+	 JButton buttonRegistrar = new JButton("Registrar");
+	 // add a listener to button
+	 buttonRegistrar.addActionListener(new ActionListener()
+	 { 
+		 public void actionPerformed(ActionEvent e)
+		   {	ventanas.registrarAsesor();}
+	 }); 
+	 panel.add(buttonRegistrar, constr);
+	 //comienza Listar
+	  constr.gridx=0;
+      constr.gridy=2; //necesito borrar esto   
+      constr.gridwidth = 2;
+      constr.anchor = GridBagConstraints.CENTER;
+
+	 JButton buttonListar = new JButton("Listar");
+	 // add a listener to button
+	 buttonListar.addActionListener(new ActionListener()
+	 { 
+		 public void actionPerformed(ActionEvent e)
+		   {ventanas.listarAsesores();
+			 menuOpciones.dispose();
+			 //comienza aca
+			 String inputString = JOptionPane.showInputDialog(null, "INPUT A NUMER TO DISPLAY");
+		        int input = Integer.parseInt(inputString);
+		        System.out.println("User input: " + input);
+
+		        JOptionPane.showMessageDialog(null, "User entered " + input);
+		   //hasta aca
+		   }
+	 }); 
+	 panel.add(buttonListar, constr);
+	 //Terminar Listar
+	 
+	 //comenzar actualizar
+	  constr.gridx=0;
+      constr.gridy=3; //necesito borrar esto   
+      constr.gridwidth = 5;
+      constr.anchor = GridBagConstraints.CENTER;
+
+	 JButton buttonActualizar = new JButton("Actualizar");
+	 // add a listener to button
+	 buttonActualizar.addActionListener(new ActionListener()
+	 { 
+		 public void actionPerformed(ActionEvent e)
+		   {	System.out.println("Actualizar asesores");}
+	 }); 
+	 panel.add(buttonActualizar, constr); 
+	 //terminar actualizar
+	 // Comenzar Eliminar
+	 
+	 constr.gridx=0;
+     constr.gridy=4; //necesito borrar esto   
+     constr.gridwidth = 10;
+     constr.anchor = GridBagConstraints.CENTER;
+
+	 JButton buttonEliminar = new JButton("Eliminar");
+	 // add a listener to button
+	 buttonEliminar.addActionListener(new ActionListener()
+	 { 
+		 public void actionPerformed(ActionEvent e)
+		   {	System.out.println("Eliminar asesores");}
+	 }); 
+	 panel.add(buttonEliminar, constr); 
+	 
+	 
+	 //terminar eliminar
+	 
+	 mainPanel.add(headingPanel);
+	 mainPanel.add(panel);
+	 menuOpciones.add(mainPanel);
+	 menuOpciones.pack();
+	 menuOpciones.setSize(400, 300);
+	 menuOpciones.setLocationRelativeTo(null);
+	 menuOpciones.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 menuOpciones.setVisible(true);
+		 
+		 
+		
+		return menuOpciones;
+		
+	}
+	
+	
 	
 	public static String validarTodoslosCampos(boolean cedula, boolean telefono, boolean anio, boolean mes, boolean dia, boolean genero, boolean sede) {
 		String resultado ="";
@@ -193,7 +301,7 @@ public class ventanas extends generarQuerys {
 			resultado = resultado +"\n - Solo se acepta genero (Masculino o Femenino)";
 		}
 		if(!sede) {
-			resultado = resultado +"\n - Solo se aceptan las 3 sedes (Ruta N, Puerto Seco y Buro)";
+			resultado = resultado +"\n - Solo se aceptan las 3 sedes (Ruta N, Puerto Seco y Buro )";
 		}
 		
 		return resultado;

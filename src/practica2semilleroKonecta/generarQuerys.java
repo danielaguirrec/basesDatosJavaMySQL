@@ -3,6 +3,7 @@ import java.io.ObjectInputStream.GetField;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -109,7 +110,7 @@ public class generarQuerys extends JFrame {
 			return DriverManager.getConnection(url,user,password);
 		}	
 		
-		public static void registrarAsesor(String Nombre, String Cedula, String Telefono, String Fecha_de_nacimiento,String Genero,String Cliente_para_el_que_trabaja, String Sede_donde_trabaja, int edad) {
+		public static void registrarAsesor(String Nombre, String Cedula, String Telefono, Date Fecha_de_nacimiento,String Genero,String Cliente_para_el_que_trabaja, String Sede_donde_trabaja, int edad) {
 			String queryAgregar = "INSERT INTO asesor (Nombre, Cedula, Telefono, Fecha_de_nacimiento,Genero,Cliente, Sede, edad) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";		
 			try(Connection conn = conectarseDB();
 				PreparedStatement ps = conn.prepareStatement(queryAgregar);) {
@@ -117,7 +118,7 @@ public class generarQuerys extends JFrame {
 				ps.setString(1, Nombre);
 				ps.setString(2, Cedula);
 				ps.setString(3, Telefono);
-				ps.setString(4, Fecha_de_nacimiento);
+				ps.setDate(4, Fecha_de_nacimiento);
 				ps.setString(5, Genero);
 				ps.setString(6, Cliente_para_el_que_trabaja);
 				ps.setString(7, Sede_donde_trabaja);
@@ -128,7 +129,36 @@ public class generarQuerys extends JFrame {
 				}   catch (SQLException sqlEx) {		
 					sqlEx.printStackTrace();
 				}
-		}	
+		}
+		
+		public static void listarAsesores() {
+			
+			String selectPersonas = "select * from asesor"; 
+			try(Connection conn = conectarseDB();
+				PreparedStatement ps = conn.prepareStatement(selectPersonas);) {
+				String plantilla = "Nombre : %s, Cedula: %s"
+						+ "Telefono : %s, Fecha de Nacimiento: %s "
+						+ "Genero : %s, Cliente: %s"+
+						"Sede : %s, Edad: %s";
+				
+			 ResultSet res = ps.executeQuery();
+				 while(res.next()) {
+					 
+					 String Nombre = res.getString("Nombre");
+					 String Cedula = res.getString("Cedula");
+					 String Telefono = res.getString("Nombre");
+					 String Fecha_de_nacimiento = ""+res.getDate("Fecha_de_nacimiento");
+					 String Genero = res.getString("Genero");
+					 String Cliente = res.getString("Cliente");
+					 String Sede = res.getString("Sede");
+					 String edad = ""+ res.getInt("edad");				 
+					 System.out.println(String.format(plantilla,Nombre,Cedula,Telefono,
+							 			Fecha_de_nacimiento,Genero,Cliente, Sede, edad));			
+				 }
+			}   catch (SQLException sqlEx) {		
+				sqlEx.printStackTrace();
+			}	
+		}
 		
 		//metodos NO SQL
 		public static void pedirValorAsesor() {
