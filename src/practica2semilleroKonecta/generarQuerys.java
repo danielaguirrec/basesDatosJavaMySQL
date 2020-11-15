@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -101,24 +103,25 @@ public class generarQuerys extends JFrame {
 
 		public static Connection conectarseDB() throws SQLException {
 			// TODO Auto-generated method stub		
-			String url="jdbc:mysql://localhost:3306/practica1konecta?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+			String url="jdbc:mysql://localhost:3306/practica2konecta?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 			String user = "root";
 			String password = "daniel10nal";
 			return DriverManager.getConnection(url,user,password);
 		}	
 		
-		public static void registrarAsesor(String Nombre, int Cedula, int Telefono, Date Fecha_de_nacimiento,String Genero,String Cliente_para_el_que_trabaja, String Sede_donde_trabaja) {
-			String queryAgregar = "INSERT INTO asesor (Nombre, Cedula, Telefono, Fecha_de_nacimiento,Genero,Cliente, Sede) VALUES(?, ?, ?, ?, ?, ?,)";		
+		public static void registrarAsesor(String Nombre, String Cedula, String Telefono, String Fecha_de_nacimiento,String Genero,String Cliente_para_el_que_trabaja, String Sede_donde_trabaja, int edad) {
+			String queryAgregar = "INSERT INTO asesor (Nombre, Cedula, Telefono, Fecha_de_nacimiento,Genero,Cliente, Sede, edad) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";		
 			try(Connection conn = conectarseDB();
 				PreparedStatement ps = conn.prepareStatement(queryAgregar);) {
 
 				ps.setString(1, Nombre);
-				ps.setInt(2, Cedula);
-				ps.setInt(3, Telefono);
-				ps.setDate(4, Fecha_de_nacimiento);
+				ps.setString(2, Cedula);
+				ps.setString(3, Telefono);
+				ps.setString(4, Fecha_de_nacimiento);
 				ps.setString(5, Genero);
 				ps.setString(6, Cliente_para_el_que_trabaja);
 				ps.setString(7, Sede_donde_trabaja);
+				ps.setInt(8, edad);
 				
 				int respuesta = ps.executeUpdate();		
 					
@@ -231,12 +234,46 @@ public class generarQuerys extends JFrame {
 		}
 		
 		public static boolean validarSiEsSede(String Genero) {
-			if(Genero.equalsIgnoreCase("ruta N") || Genero.equalsIgnoreCase("puerto seco")  || Genero.equalsIgnoreCase("buro	") ) {
+			if(Genero.equalsIgnoreCase("ruta N") || Genero.equalsIgnoreCase("puerto seco")  || Genero.equalsIgnoreCase("buro") ) {
 				return true;
 			}
 			else {
 				return false;
 			}			
+		}
+		
+		public static int obtenerEdad(String anio, String mes, String dia) {
+			
+			int edad = 0;
+			java.util.Date d = new java.util.Date();
+			@Deprecated
+			int anioActual= d.getYear()+ 1900;
+			@Deprecated
+			int mesActual =d.getMonth() +1;
+			@Deprecated
+			Calendar cal  = new GregorianCalendar();
+		    int diaActual = cal.get(Calendar.DAY_OF_MONTH); 
+			int anioEntero = Integer.parseInt(anio);
+			int mesEntero = Integer.parseInt(mes);
+			int diaEntero = Integer.parseInt(dia);
+			
+			System.out.print("Año actual: ");
+			System.out.print(anioActual);
+			
+			System.out.print("\nAño nacimiento: ");
+			System.out.print(anioEntero);
+			edad = anioActual - anioEntero;
+			
+			if (mesActual == mesEntero) {
+				if(diaActual < diaEntero) {
+					edad = edad -1;
+				}			
+			}
+			else if(mesActual < mesEntero) {
+				edad = edad -1;
+			}
+					
+			return edad;
 		}
 	}
 

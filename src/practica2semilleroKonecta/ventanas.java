@@ -106,7 +106,7 @@ public class ventanas extends generarQuerys {
  {
    public void actionPerformed(ActionEvent e)
    {
-	   String Nombre = userNameLabel.getText();
+	   String Nombre = userNameTxt.getText();
 	   
 	   String Cedula = userCedulaTxt.getText();
 	   boolean bCedula = validarSiEsNum(Cedula);
@@ -131,14 +131,24 @@ public class ventanas extends generarQuerys {
 	   String Sede = userSedeTxt.getText();
 	   boolean bSede= validarSiEsSede(Sede);
 	   
+	   int edad = generarQuerys.obtenerEdad(Anio, Mes, Dia);
+	   
 	   String ValidacionCampo = validarTodoslosCampos(bCedula, bTelefono, bAnio, bMes, bDia, bGenero,  bSede);
    
 	  // validarSiEsNum(validarCedula);
 	   if("".equals(ValidacionCampo)) {
 		    
-		   headingLabel.setText("El registro fue existoso");
+		     headingLabel.setText("El registro en la BASE DE DATOS fue existoso!");
 		     userNameTxt.setText("");	
 		     userCedulaTxt.setText("");
+		     userTelefonoTxt.setText("");
+		     userAnioTxt.setText("");
+		     userMesTxt.setText("");
+		     userDiaTxt.setText("");
+		     userGeneroTxt.setText("");
+		     userClienteTxt.setText("");
+		     userSedeTxt.setText("");
+		     registrarAsesor( Nombre, Cedula, Telefono,  Anio, Genero, Cliente,Sede, edad);
 	   }
 	   else {
 		   headingLabel.setText(ValidacionCampo); 
