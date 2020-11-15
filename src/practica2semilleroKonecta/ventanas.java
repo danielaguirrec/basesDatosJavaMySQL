@@ -37,21 +37,69 @@ public class ventanas extends generarQuerys {
          JLabel userMesLabel = new JLabel("Ingrese el Mes en que nacio del asesor :");
          JLabel userDiaLabel = new JLabel("Ingrese el Dia en que nacio del asesor :");
          JLabel userGeneroLabel = new JLabel("Ingrese el Genero ( Masculino/Femenino) del asesor :");
-         JLabel userNameLabel = new JLabel("Ingrese el nombre del asesor :");
-         JLabel userNameLabel = new JLabel("Ingrese el nombre del asesor :");
-         
-         
-         
-         
-         
+         JLabel userClienteLabel = new JLabel("Ingrese el Cliente del asesor :");
+         JLabel userSedeLabel = new JLabel("Ingrese sede (Ruta N, Puerto Seco, Buoro) :");       
          
          
          JTextField userNameTxt = new JTextField(20);
+         JTextField userCedulaTxt = new JTextField(20);
+         JTextField userTelefonoTxt = new JTextField(20);
+         JTextField userAnioTxt = new JTextField(20);
+         JTextField userMesTxt = new JTextField(20);
+         JTextField userDiaTxt = new JTextField(20);
+         JTextField userGeneroTxt = new JTextField(20);
+         JTextField userClienteTxt = new JTextField(20);
+         JTextField userSedeTxt = new JTextField(20);    
          
          panel.add(userNameLabel, constr);
          constr.gridx=1;
          panel.add(userNameTxt, constr);
          constr.gridx=0; constr.gridy=1;
+         
+         
+         
+         panel.add(userCedulaLabel, constr);
+         constr.gridx=1;
+         panel.add(userCedulaTxt, constr);
+         constr.gridx=0; constr.gridy=2;
+          
+         panel.add(userTelefonoLabel, constr);
+         constr.gridx=1;
+         panel.add(userTelefonoTxt, constr);
+         constr.gridx=0; constr.gridy=3;
+         
+         panel.add(userAnioLabel, constr);
+         constr.gridx=1;
+         panel.add(userAnioTxt, constr);
+         constr.gridx=0; constr.gridy=4;
+
+         panel.add(userMesLabel, constr);
+         constr.gridx=1;
+         panel.add(userMesTxt, constr);
+         constr.gridx=0; constr.gridy=5;
+         
+         panel.add(userDiaLabel, constr);
+         constr.gridx=1;
+         panel.add(userDiaTxt, constr);
+         constr.gridx=0; constr.gridy=6;
+         
+         panel.add(userGeneroLabel, constr);
+         constr.gridx=1;
+         panel.add(userGeneroTxt, constr);
+         constr.gridx=0; constr.gridy=7;
+         
+         panel.add(userClienteLabel, constr);
+         constr.gridx=1;
+         panel.add(userClienteTxt, constr);
+         constr.gridx=0; constr.gridy=8;
+         
+         panel.add(userSedeLabel, constr);
+         constr.gridx=1;
+         panel.add(userSedeTxt, constr);
+         constr.gridx=0; constr.gridy=9;
+     
+          
+        
          
          constr.gridwidth = 2;
          constr.anchor = GridBagConstraints.CENTER;
