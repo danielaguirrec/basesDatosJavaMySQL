@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+//import java.util.Date;
 
 import javax.swing.JFrame;
 
@@ -146,18 +147,97 @@ public class generarQuerys extends JFrame {
 			return emparejo;
 		}
 		
+		public static boolean validarSiEsAnio(String anio) {
+			
+			if(validarSiEsNum(anio)) {
+				java.util.Date d = new java.util.Date();
+				@Deprecated
+				int anioActual= d.getYear()+ 1900;
+				int anioEntero = Integer.parseInt(anio);
+				if(anioActual < anioEntero && anioEntero > 0) {
+				return false;}else {return true;}
+				
+			}
+			else {
+				return false;
+			}
+		}
 		
+	public static boolean validarSiEsMes(String mes) {
+			
+			if(validarSiEsNum(mes)) {
+				
+				int mesUsuario = Integer.parseInt(mes);
+				if(13 < mesUsuario && mesUsuario > 0) {
+				return false;}else {return true;}
+				
+			}
+			else {
+				return false;
+			}
+		}
+	
+	public static boolean validarSiEsDia(String mes, String dia) {
 		
+		int mesUsuario = Integer.parseInt(mes);
+		int diaUsuario = Integer.parseInt(dia);
+		if(diaUsuario <32) {
 		
+		switch (mesUsuario) {
+			  case 1:
+			  case 3:
+			  case 5:
+			  case 7:
+			  case 8:
+			  case 10:
+			  case 12:
+			  if(diaUsuario <= 31 && diaUsuario > 0) {
+				  return true;
+			  }
+			  else {
+				  return false;
+			  }
+			  case 4:
+			  case 6:
+			  case 9:
+			  case 11:
+				  if(diaUsuario <= 30 && diaUsuario > 0) {
+					  return true;
+				  }
+				  else {
+					  return false;
+				  }
+			  case 2:
+				  if(diaUsuario <= 28 && diaUsuario > 0) {
+					  return true;
+				  }
+				  else {
+					  return false;
+				  }
+				  
+			  default:
+			   return false;
+			}
+		}else {return false;}
+		}
+	
+		public static boolean validarSiEsGenero(String Genero) {
+			if(Genero.equalsIgnoreCase("Masculino") || Genero.equalsIgnoreCase("Femenino") ) {
+				return true;
+			}
+			else {
+				return false;
+			}			
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
+		public static boolean validarSiEsSede(String Genero) {
+			if(Genero.equalsIgnoreCase("ruta N") || Genero.equalsIgnoreCase("puerto seco")  || Genero.equalsIgnoreCase("buro	") ) {
+				return true;
+			}
+			else {
+				return false;
+			}			
+		}
 	}
 
 

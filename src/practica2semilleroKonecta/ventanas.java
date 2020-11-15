@@ -38,8 +38,7 @@ public class ventanas extends generarQuerys {
          JLabel userDiaLabel = new JLabel("Ingrese el Dia en que nacio del asesor :");
          JLabel userGeneroLabel = new JLabel("Ingrese el Genero ( Masculino/Femenino) del asesor :");
          JLabel userClienteLabel = new JLabel("Ingrese el Cliente del asesor :");
-         JLabel userSedeLabel = new JLabel("Ingrese sede (Ruta N, Puerto Seco, Buoro) :");       
-         
+         JLabel userSedeLabel = new JLabel("Ingrese sede (Ruta N, Puerto Seco, Buoro) :");               
          
          JTextField userNameTxt = new JTextField(20);
          JTextField userCedulaTxt = new JTextField(20);
@@ -55,9 +54,7 @@ public class ventanas extends generarQuerys {
          constr.gridx=1;
          panel.add(userNameTxt, constr);
          constr.gridx=0; constr.gridy=1;
-         
-         
-         
+        
          panel.add(userCedulaLabel, constr);
          constr.gridx=1;
          panel.add(userCedulaTxt, constr);
@@ -97,10 +94,7 @@ public class ventanas extends generarQuerys {
          constr.gridx=1;
          panel.add(userSedeTxt, constr);
          constr.gridx=0; constr.gridy=9;
-     
-          
-        
-         
+    
          constr.gridwidth = 2;
          constr.anchor = GridBagConstraints.CENTER;
          
@@ -112,15 +106,43 @@ public class ventanas extends generarQuerys {
  {
    public void actionPerformed(ActionEvent e)
    {
-	   String validarCedula = userNameTxt.getText();
+	   String Nombre = userNameLabel.getText();
 	   
+	   String Cedula = userCedulaTxt.getText();
+	   boolean bCedula = validarSiEsNum(Cedula);
+	   
+	   String Telefono = userTelefonoTxt.getText();
+	   boolean bTelefono = validarSiEsNum(Telefono);
+	   
+	   String Anio = userAnioTxt.getText();
+	   boolean bAnio = validarSiEsAnio(Anio);
+	   
+	   String Mes = userMesTxt.getText();
+	   boolean bMes = validarSiEsMes(Mes);
+	   
+	   String Dia = userDiaTxt.getText();
+	   boolean bDia = validarSiEsDia(Mes, Dia);
+	   
+	   String Genero = userGeneroTxt.getText();
+	   boolean bGenero = validarSiEsGenero(Genero);
+	   
+	   String Cliente = userClienteTxt.getText();
+	   
+	   String Sede = userSedeTxt.getText();
+	   boolean bSede= validarSiEsSede(Sede);
+	   
+	   String ValidacionCampo = validarTodoslosCampos(bCedula, bTelefono, bAnio, bMes, bDia, bGenero,  bSede);
+   
 	  // validarSiEsNum(validarCedula);
-	   if(!validarSiEsNum(validarCedula)) {
-		   headingLabel.setText("Los campos cedula y edad deben ser numeros");   
+	   if("".equals(ValidacionCampo)) {
+		    
+		   headingLabel.setText("El registro fue existoso");
+		     userNameTxt.setText("");	
+		     userCedulaTxt.setText("");
 	   }
 	   else {
-		   headingLabel.setText("Buena validacion");
-		     userNameTxt.setText("");
+		   headingLabel.setText(ValidacionCampo); 
+		
 	   }
    }
  });
@@ -138,6 +160,33 @@ public class ventanas extends generarQuerys {
 		 frameRegistro.setVisible(true);
 		         
 		return  frameRegistro;
+	}
+	
+	public static String validarTodoslosCampos(boolean cedula, boolean telefono, boolean anio, boolean mes, boolean dia, boolean genero, boolean sede) {
+		String resultado ="";
+		if(!cedula) {
+			resultado = resultado +" - La cedula debe ser un numero";	
+		}
+		if(!telefono) {
+			resultado = resultado +"\n - El telefono debe ser un numero";
+		}
+		if(!anio) {
+			resultado = resultado +"\n - El anio debe ser un numero y menor que el anio actual";
+		}
+		if(!mes) {
+			resultado = resultado +"\n - El mes debe estar correcto";
+		}
+		if(!dia) {
+			resultado = resultado +"\n - El dia debe estar correcto";
+		}
+		if(!genero) {
+			resultado = resultado +"\n - Solo se acepta genero (Masculino o Femenino)";
+		}
+		if(!sede) {
+			resultado = resultado +"\n - Solo se aceptan las 3 sedes (Ruta N, Puerto Seco y Buro)";
+		}
+		
+		return resultado;
 	}
 
 }
