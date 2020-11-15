@@ -140,6 +140,29 @@ public class generarQuerys extends JFrame {
 				}
 		}
 		
+		
+		public static void actualizarAsesorQuery(String Nombre, String Cedula, String Telefono, Date Fecha_de_nacimiento,String Genero,String Cliente_para_el_que_trabaja, String Sede_donde_trabaja, int edad) {
+			String queryAgregar = "UPDATE asesor SET Nombre = ?, Telefono = ?, Fecha_de_nacimiento = ?,"+
+									"Genero = ?, Cliente = ?, Sede=?, edad = ?  WHERE Cedula = ?";		
+			try(Connection conn = conectarseDB();
+				PreparedStatement ps = conn.prepareStatement(queryAgregar);) {
+
+				ps.setString(1, Nombre);
+				ps.setString(8, Cedula);
+				ps.setString(2, Telefono);
+				ps.setDate(3, Fecha_de_nacimiento);
+				ps.setString(4, Genero);
+				ps.setString(5, Cliente_para_el_que_trabaja);
+				ps.setString(6, Sede_donde_trabaja);
+				ps.setInt(7, edad);
+				
+				int respuesta = ps.executeUpdate();		
+					
+				}   catch (SQLException sqlEx) {		
+					sqlEx.printStackTrace();
+				}
+		}
+		
 		public static void listarAsesores() {
 			
 			String selectPersonas = "select * from asesor"; 
@@ -201,6 +224,23 @@ public class generarQuerys extends JFrame {
 				sqlEx.printStackTrace();
 			}	
 		}
+		
+		private static void actualizarAsesorQuery(String Nombre,String cedula,String Telefono,  String date, String Genero, String Cliente,String Sede, String edad) {
+			
+			String queryAgregar = "UPDATE asesor set Nombre = ? where Cedula=?";
+				
+				try(Connection conn = conectarseDB();
+					PreparedStatement ps = conn.prepareStatement(queryAgregar);) {
+					
+					ps.setString(1, Nombre);
+					ps.setString(2, Nombre);
+				//	ps.setString(3, Salario);		
+					int respuesta = ps.executeUpdate();		
+						
+					}   catch (SQLException sqlEx) {		
+						sqlEx.printStackTrace();
+					}		
+			}
 		
 		//metodos NO SQL
 		public static void pedirValorAsesor() {
@@ -347,7 +387,53 @@ public class generarQuerys extends JFrame {
 					
 			return edad;
 		}
+		
+		
+		public static boolean existeRegistro(String validarCedula) {
+			
+			boolean existeCedula=false;
+			ArrayList<String> cedulas = new ArrayList<String>();
+			String selectPersonas = "select Cedula from asesor"; 
+			try(Connection conn = conectarseDB();
+				PreparedStatement ps = conn.prepareStatement(selectPersonas);) {
+				String plantilla = "Nombre : %s, Cedula: %s"
+						+ "Telefono : %s, Fecha de Nacimiento: %s "
+						+ "Genero : %s, Cliente: %s"+
+						"Sede : %s, Edad: %s";
+				
+						
+			 ResultSet res = ps.executeQuery();
+			 int i=0;
+				 while(res.next()) {
+					 	String Cedula = res.getString("Cedula");	
+					 	
+					 	cedulas.add(Cedula);
+				 }
+				 return cedulas.contains(validarCedula);
+			 
+			}   catch (SQLException sqlEx) {		
+				sqlEx.printStackTrace();
+				return false;
+			}				
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
+
+
 class registrosBD{
 	
 	 private String Nombre;
@@ -436,7 +522,6 @@ class registrosBD{
      // Constraints for the layout
      GridBagConstraints constr = new GridBagConstraints();
      constr.insets = new Insets(1, 5, 1, 5);
-     
      int numRegistros = registro.size();
      int posicionEntablaY = 0;
      int saltoDeRegistroY= 8;
@@ -465,23 +550,16 @@ class registrosBD{
          panel.add(userClienteLabel, constr); constr.gridy=posicionEntablaY+6;
          panel.add(userSedeLabel, constr); constr.gridy=posicionEntablaY+7;
          panel.add(userEdadLabel, constr);
-  
-         //
-         
          JLabel espacio = new JLabel("       ");
          constr.gridx=0; constr.gridy=posicionEntablaY+8;
          panel.add(espacio, constr);
          constr.gridx=0; constr.gridy=posicionEntablaY+9;
-         posicionEntablaY+=10; 
-         
+         posicionEntablaY+=10;        
      }
      
      constr.anchor = GridBagConstraints.WEST;      
-     //constr.gridx=0;
-    // constr.gridy=1; //necesito borrar esto   
      constr.gridwidth = 2;
-     constr.anchor = GridBagConstraints.CENTER;
-	
+     constr.anchor = GridBagConstraints.CENTER;	
 	 mainPanel.add(headingPanel);
 	 mainPanel.add(panel);
 	 ventanaListar.add(mainPanel);
@@ -492,7 +570,6 @@ class registrosBD{
 	 ventanaListar.setVisible(true);	
 	 return ventanaListar;
 	}
-
 }
 
 
